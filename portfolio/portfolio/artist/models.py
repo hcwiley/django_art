@@ -4,6 +4,7 @@ from django.utils.text import slugify
 from django.contrib.auth.models import AbstractUser
 from tinymce.models import HTMLField
 import datetime
+import shutil, uuid, os
 
 class ParentMedia(models.Model):
   name = models.CharField(max_length=100, blank=False, null=False, default="")
@@ -28,7 +29,11 @@ class ParentMedia(models.Model):
     return "%s%s" % (settings.MEDIA_URL, self.image.name)
 
   def full_res(self):
-    return "%s%s" % (settings.MEDIA_URL, self.full_res_image.name)
+    p = self.full_res_image.path
+    fold = os.path.dirname(p)
+    fold = fold.split("/")
+    fold = fold[len(fold)-1]
+    return "%s%s/%s" % (settings.MEDIA_URL, fold,os.path.basename(p))
 
   def height(self):
     try:
@@ -61,7 +66,14 @@ class ParentMedia(models.Model):
 
   def save(self, *args, **kwargs):
     super(ParentMedia, self).save()
-    self.rotateImage()
+    if not self.thumbnail:
+      orig = p = self.full_res_image.path
+      ext = p[p.rfind("."):].lower()
+      p = p.replace("%s" % ext, "")
+      u = str(uuid.uuid4())[:18]
+      p = "%s/%s%s" % (p,u,ext)
+      shutil.move(orig, p)
+      self.full_res_image = p
     self.saveImage()
     self.saveThumbnail()
 
@@ -81,9 +93,6 @@ class ParentMedia(models.Model):
         image = image.rotate(-90)
     except:
       pass
-    dot = path.rindex('.')
-    path = (path[:dot], path[dot:])
-    path = "%s-small%s" % (path[0], path[1])
     image.save(path)
     path = path.split(settings.MEDIA_ROOT)
     path = path[1].strip("/")
@@ -94,7 +103,9 @@ class ParentMedia(models.Model):
     from PIL import Image
     path = self.full_res_image.path
     image = Image.open(path)
-    image.thumbnail((900,900), Image.ANTIALIAS)
+    size = (950,950)
+    image.thumbnail(size, Image.ANTIALIAS)
+
     dot = path.rindex('.')
     path = (path[:dot], path[dot:])
     path = "%s-small%s" % (path[0], path[1])
@@ -108,7 +119,30 @@ class ParentMedia(models.Model):
     from PIL import Image
     path = self.full_res_image.path
     image = Image.open(path)
-    image.thumbnail((450,450), Image.ANTIALIAS)
+
+    size = (450,450)
+
+    image_ratio = image.size[0] / float(image.size[1])
+    ratio = size[0] / float(size[1])
+    #The image is scaled/cropped vertically or horizontally depending on the ratio
+    if ratio > image_ratio:
+      image = image.resize((size[0], int(round(size[0] * image.size[1] / image.size[0]))),
+          Image.ANTIALIAS)
+      # Crop in the top, middle or bottom
+      box = (0, int(round((image.size[1] - size[1]) / 2)), image.size[0],
+              int(round((image.size[1] + size[1]) / 2)))
+      image = image.crop(box)
+    elif ratio < image_ratio:
+      image = image.resize((int(round(size[1] * image.size[0] / image.size[1])), size[1]),
+          Image.ANTIALIAS)
+      box = (int(round((image.size[0] - size[0]) / 2)), 0,
+              int(round((image.size[0] + size[0]) / 2)), image.size[1])
+      image = image.crop(box)
+    else :
+      image = image.resize((size[0], size[1]),
+            Image.ANTIALIAS)
+
+    #image.thumbnail((450,450), Image.ANTIALIAS)
     dot = path.rindex('.')
     path = (path[:dot], path[dot:])
     path = "%s-thumb%s" % (path[0], path[1])
@@ -121,6 +155,7 @@ class ParentMedia(models.Model):
 class Artist(AbstractUser):
   # custom fields
   name = models.CharField(max_length=100, blank=False, null=False, default="")
+  tagline = models.CharField(max_length=255, blank=True, null=True, default="")
   slug = models.CharField(max_length=100, blank=True, null=True, default="", editable=False)
   bio = models.TextField(blank=True, null=True, default="")
   artist_statement = models.TextField(blank=True, null=True, default="")

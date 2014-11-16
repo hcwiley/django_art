@@ -13,7 +13,8 @@ block content
       {% for category in categories %}
       .row
         .col-sm-3
-          h4 #{category.name}
+          a(href='#{category.get_absolute_url()}')
+            h4 #{category.name}
         for media in category.medias|slice:":3"
           a(href='#{category.get_absolute_url()}##{media.name}')
             .col-sm-3.artist-block

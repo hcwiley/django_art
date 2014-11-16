@@ -1,4 +1,4 @@
-# Django settings for hcwiley_art project.
+# Django settings for portfolio project.
 import os, sys
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
@@ -9,7 +9,7 @@ else:
   DATABASES = {
       'default': {
           'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-          'NAME': 'hcwiley_art2',                      # Or path to database file if using sqlite3.
+          'NAME': 'portfolio',                      # Or path to database file if using sqlite3.
           'USER': 'django',
           'PASSWORD': 'django',
           'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
@@ -71,11 +71,11 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(PROJECT_ROOT, '../collected-static')
 STATIC_URL = '/static/'
 if not IS_DEV:
-  MEDIA_ROOT = '/home/hcwiley/webapps/hcwiley_art_media/'
+  MEDIA_ROOT = '/home/hcwiley/webapps/portfolio_media/'
 
 #ADMIN_MEDIA_PREFIX = os.path.join(STATIC_URL, 'admin')
 sys.path.append(PROJECT_ROOT)
-sys.path.append(os.path.join(PROJECT_ROOT, 'hcwiley_art'))
+sys.path.append(os.path.join(PROJECT_ROOT, 'portfolio'))
  
 
 TEMPLATE_DIRS = (
@@ -165,12 +165,6 @@ ROOT_URLCONF = 'portfolio.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'portfolio.wsgi.application'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
-
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -178,6 +172,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_admin_bootstrapped.bootstrap3',
+    'django_admin_bootstrapped',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

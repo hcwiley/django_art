@@ -61,6 +61,8 @@ block content
             if media.video_link
               .col-sm-3.pull-right
                 img.img-thumbnail.enlarge(src='#{media.thumb()}', data-dimensions="#{media.dimensions}", data-medium="#{media.medium}", data-year="#{media.year}", data-name='#{media.name}', data-full='#{media.full_res()}')
+                br
+                br
             if media.aux_images.count > 0
               for img in media.aux_images.all
                 .col-sm-3.pull-right

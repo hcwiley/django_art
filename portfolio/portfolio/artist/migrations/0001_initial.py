@@ -72,7 +72,6 @@ class Migration(SchemaMigration):
         # Adding model 'ArtistMedia'
         db.create_table(u'artist_artistmedia', (
             (u'parentmedia_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['artist.ParentMedia'], unique=True, primary_key=True)),
-            ('artist', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['artist.Artist'])),
             ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['artist.ArtistMediaCategory'])),
             ('position', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=1)),
             ('description', self.gf('django.db.models.fields.TextField')(default='', null=True, blank=True)),
@@ -101,7 +100,6 @@ class Migration(SchemaMigration):
         # Adding model 'Show'
         db.create_table(u'artist_show', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('artist', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['artist.Artist'])),
             ('name', self.gf('django.db.models.fields.CharField')(default='', max_length=100)),
             ('location', self.gf('django.db.models.fields.CharField')(default='', max_length=255, null=True, blank=True)),
             ('date', self.gf('django.db.models.fields.DateField')(default=datetime.date.today)),
@@ -199,7 +197,6 @@ class Migration(SchemaMigration):
         },
         u'artist.artistmedia': {
             'Meta': {'ordering': "('position',)", 'object_name': 'ArtistMedia', '_ormbases': [u'artist.ParentMedia']},
-            'artist': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['artist.Artist']"}),
             'aux_images': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'aux_images'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['artist.ParentMedia']"}),
             'category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['artist.ArtistMediaCategory']"}),
             'description': ('django.db.models.fields.TextField', [], {'default': "''", 'null': 'True', 'blank': 'True'}),
@@ -252,7 +249,6 @@ class Migration(SchemaMigration):
         },
         u'artist.show': {
             'Meta': {'ordering': "('-date',)", 'object_name': 'Show'},
-            'artist': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['artist.Artist']"}),
             'date': ('django.db.models.fields.DateField', [], {'default': 'datetime.date.today'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'link': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['artist.Link']", 'null': 'True', 'blank': 'True'}),

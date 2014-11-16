@@ -11,8 +11,12 @@ html(lang="en")
     .row
       a(href='/')
         .col-sm-8.col-sm-offset-1.text-left
-          h1 H. Cole Wiley
-          h5 sculptor &amp; digital menace
+          if artist and artist.name
+            h1=artist.name
+            h5=artist.tagline
+          else
+            h1 Arist name
+            h5 Something clever and arty
     header.navbar
       nav.navbar(role="navigation")
         .navbar-header
@@ -36,7 +40,8 @@ html(lang="en")
       block content
     footer.container
       .col-sm-12
-        .row.cover-photo(style="background-image: url('#{artist.cover_photo.full_res()}');")
+        if artist and artist.cover_photo
+          .row.cover-photo(style="background-image: url('#{artist.cover_photo.full_res()}');")
           .text-center.links
             li.brand
               a(href='/') home

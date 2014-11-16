@@ -17,7 +17,7 @@ def common_args(request):
                 'user' : user,
                 'PAGE_TITLE' : 'The Front',
            }
-    args['artist'] = Artist.objects.all()[0]
+    args['artist'] = Artist.objects.all()[0] if Artist.objects.count() > 0 else None
     categories = args['categories'] = ArtistMediaCategory.objects.all()
     args['medias'] = {}
     for category in categories:
@@ -45,6 +45,7 @@ def rotate(req, dirr, pk):
       image.left = True
     if dirr == 'right':
       image.right = True
+    image.rotateImage()
     image.save()
   return redirect(req.META['HTTP_REFERER'])
   
