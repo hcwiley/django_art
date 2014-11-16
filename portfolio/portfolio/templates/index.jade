@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  .row
+    .col-xs-12.visible-xs
+      br
+      br
+  .row
+    .col-sm-12.text-center
+      br
+  .row
+    .col-sm-10.col-sm-offset-1
+      {% for category in categories %}
+      .row
+        .col-sm-3
+          h4 #{category.name}
+        for media in category.medias|slice:":3"
+          a(href='#{category.get_absolute_url()}##{media.name}')
+            .col-sm-3.artist-block
+              img.md-thumbnail.img-thumbnail(src="#{media.thumb()}")
+      if not forloop.last
+        .visible-xs
+          br
+          hr.dashed
+          br
+      {% endfor %}

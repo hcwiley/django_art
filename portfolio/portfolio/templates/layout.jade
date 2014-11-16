@@ -1,0 +1,47 @@
+{% load compressed %}
+doctype 5
+html(lang="en")
+  head
+    title=PAGE_TITLE
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    {% compressed_css 'client' %}
+    {% compressed_js 'client' %}
+    link(rel='icon', type='image/x-icon', href='./images/fav.png')
+  body
+    .row
+      a(href='/')
+        .col-sm-8.col-sm-offset-1.text-left
+          h1 H. Cole Wiley
+          h5 sculptor &amp; digital menace
+    header.navbar
+      nav.navbar(role="navigation")
+        .navbar-header
+          button(type="button" ,class="navbar-toggle" ,data-toggle="collapse" ,data-target="#bs-navbar-collapse-1")
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+        #bs-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            for category in categories
+              li.brand
+                a(href='/#{category.slug}') #{category.name}
+            li.brand
+              a(href='/contact') contact
+      block breadcrumbs
+    #content.container
+      .visible-xs
+        br
+        br
+      block content
+    footer.container
+      .col-sm-12
+        .row.cover-photo(style="background-image: url('#{artist.cover_photo.full_res()}');")
+          .text-center.links
+            li.brand
+              a(href='/') home
+            for category in categories
+              li.brand
+                a(href='/#{category.slug}') #{category.name}
+            li.brand
+              a(href='/contact') contact

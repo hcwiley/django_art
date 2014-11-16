@@ -1,0 +1,49 @@
+extends layout
+
+block content
+  .row
+    .col-sm-10.col-sm-offset-1.text-right
+      h3 H. Cole Wiley
+      h5 sculptor &amp; digital menace
+      br
+      br
+    .col-md-10.col-md-offset-1.text-right
+        .col-sm-5.pull-right
+          .row
+            a(href='mailto:artist@hcwiley.com')
+              h4 artist@hcwiley.com
+          if artist.cv
+            a(href='#{artist.cv_link()}', target='_blank', download='#{artist.cv_name()}')
+              h4 download cv &nbsp;
+                span.glyphicon.glyphicon-cloud-download
+          if artist.head_shot
+            .row
+              br
+              br
+              img.img-thumbnail(src='#{artist.head_shot.img()}')
+        .col-sm-5.pull-left
+          if artist.bio
+            .row
+                h3.accent bio
+                hr
+                p.text-left=artist.bio
+          if artist.artist_statement
+            .row
+                h3.accent artist statement
+                hr
+                p.text-left=artist.artist_statement
+          if shows
+            .row
+                h3.accent shows
+                hr
+                ul.text-left
+                  for show in shows
+                    if show.link
+                      a(href='#{show.link.url}', target='_blank')
+                        li
+                          p "#{show.name}", #{show.date|date:"N Y"}
+                          p #{show.location}
+                    else
+                      li
+                        p "#{show.name}", #{show.date|date:"N Y"}
+                        p #{show.location}
