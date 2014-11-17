@@ -15,9 +15,11 @@ def common_args(request):
                 'STATIC_URL' : settings.STATIC_URL,
                 'MEDIA_URL' : settings.MEDIA_URL,
                 'user' : user,
-                'PAGE_TITLE' : 'The Front',
+                'PAGE_TITLE' : 'Artist Website',
            }
-    args['artist'] = Artist.objects.all()[0] if Artist.objects.count() > 0 else None
+    artist = args['artist'] = Artist.objects.all()[0] if Artist.objects.count() > 0 else None
+    if artist and artist.name:
+      args['PAGE_TITLE'] = artist.name
     categories = args['categories'] = ArtistMediaCategory.objects.all()
     args['medias'] = {}
     for category in categories:

@@ -1,3 +1,4 @@
+fabric
 Django==1.5
 Pillow
 MySQL-python==1.2.3

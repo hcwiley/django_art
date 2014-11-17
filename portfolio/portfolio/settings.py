@@ -94,22 +94,15 @@ PIPELINE_COMPILERS = (
     'pipeline.compilers.stylus.StylusCompiler',
 )
 #PIPELINE_ENABLED = True
-if IS_DEV:
-  PIPELINE_STYLUS_BINARY = '/usr/local/share/npm/bin/stylus'
-  PIPELINE_YUGLIFY_BINARY = '/usr/local/share/npm/bin/yuglify'
-  PIPELINE_UGLIFYJS_BINARY = '/usr/local/share/npm/lib/node_modules/yuglify/node_modules/uglify-js/bin/uglifyjs'
-else:
-  PIPELINE_STYLUS_BINARY =  '/home/hcwiley/webapps/front_stream/node_modules/.bin/stylus'
-  PIPELINE_YUGLIFY_BINARY = '/home/hcwiley/webapps/front_stream/node_modules/.bin/yuglify'
-  PIPELINE_UGLIFYJS_BINARY = '/home/hcwiley/webapps/front_stream/node_modules/yuglify/node_modules/uglify-js/bin/uglifyjs'
 
 PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.yuglify.YuglifyCompressor'
-PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.uglifyjs.UglifyJSCompressor'
+#PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.uglifyjs.UglifyJSCompressor'
+PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.yuglify.YuglifyCompressor'
 PIPELINE_CSS = {
     'client': {
         'source_filenames': (
           'css/bootstrap.min.css',
-          'css/index.styl',
+          'css/index.css',
         ),
         'output_filename': 'css/client.min.css',
         'extra_context': {
@@ -123,7 +116,6 @@ PIPELINE_JS = {
         'source_filenames': (
           'js/jquery.js',
           'js/bootstrap.min.js',
-          'js/jquery-ui-1.10.3.custom.min.js',
           'js/client.js',
         ),
         'output_filename': 'js/client.min.js',

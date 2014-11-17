@@ -8,9 +8,9 @@ html(lang="en")
     {% compressed_js 'client' %}
     link(rel='icon', type='image/x-icon', href='./images/fav.png')
   body
-    .row
+    .container-fluid
       a(href='/')
-        .col-sm-8.col-sm-offset-1.text-left
+        .col-sm-5.col-sm-offset-1.text-left
           if artist and artist.name
             h1=artist.name
             h5=artist.tagline
