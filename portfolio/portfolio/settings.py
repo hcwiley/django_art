@@ -65,13 +65,14 @@ SECRET_KEY = 'nj)4j%byiam=xv&zdm#61(4_wrme)zgh+bs6qo308nqd3#_n@k'
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
+if 'MEDIA_ROOT' in os.environ.keys():
+  MEDIA_ROOT = os.environ['MEDIA_ROOT']
+else:
+  MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 MEDIA_URL = '/media/'
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, '../collected-static')
 STATIC_URL = '/static/'
-if not IS_DEV:
-  MEDIA_ROOT = '/home/hcwiley/webapps/portfolio_media/'
 
 #ADMIN_MEDIA_PREFIX = os.path.join(STATIC_URL, 'admin')
 sys.path.append(PROJECT_ROOT)
