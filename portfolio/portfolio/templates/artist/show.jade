@@ -1,19 +1,17 @@
 extends layout
 
 block breadcrumbs
-  .row
+  .col-sm-10.col-sm-offset-1.text-center
+    for media in category_media
+      a(href='##{media.name}') #{media.name}
+      if not forloop.last
+        p.inline &nbsp;&#149;&nbsp;
     br
-    .col-sm-10.col-sm-offset-1.text-center
-      for media in category_media
-        a(href='##{media.name}') #{media.name}
-        if not forloop.last
-          p.inline &nbsp;&#149;&nbsp;
-      br
-      br
-      br
-      br
-    .visible-xs
-      br
+    br
+    br
+    br
+  .visible-xs
+    br
 
 
 block content
@@ -54,8 +52,8 @@ block content
         .col-sm-8.col-sm-offset-1.enlarge(style="background-image: url('#{media.img()}');", data-dimensions="#{media.dimensions}", data-medium="#{media.medium}", data-year="#{media.year}", data-name='#{media.name}', data-full='#{media.full_res()}')
           img.invisible.img-thumbnail.lg-thumbnail(src="#{media.img()}", data-dimensions="#{media.dimensions}", data-medium="#{media.medium}", data-year="#{media.year}", data-name='#{media.name}', data-full='#{media.full_res()}')
         {% endif %}
-        .row
-          .col-sm-12
+        .col-sm-12
+          .row
             br
           .col-sm-8.col-sm-offset-4
             if media.video_link
@@ -70,8 +68,8 @@ block content
                   br
                   br
         {% if not forloop.last %}
-        .row
-          .col-sm-12
+        .col-sm-12
+          .row
             br
             hr.lightGray
             br
