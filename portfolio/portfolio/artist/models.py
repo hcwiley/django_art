@@ -69,10 +69,11 @@ class ParentMedia(models.Model):
     if not self.thumbnail:
       orig = p = self.full_res_image.path
       ext = p[p.rfind("."):].lower()
-      p = p.replace("%s" % ext, "")
+      p = p.rstrip(os.path.basename(orig))
       u = str(uuid.uuid4())[:18]
       p = "%s/%s%s" % (p,u,ext)
       shutil.move(orig, p)
+      p = "artist_media/%s%s" % (u,ext)
       self.full_res_image = p
     self.saveImage()
     self.saveThumbnail()
