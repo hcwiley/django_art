@@ -55,13 +55,13 @@ class ParentMedia(models.Model):
   def video(self):
     html = ""
     if self.video_link.count("vimeo") > 0:
-      html = '<iframe src="//player.vimeo.com/video/%s" width="600" height="300px" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>' % (self.video_link[self.video_link.rindex("/") + 1 :])
+      html = '<iframe src="//player.vimeo.com/video/%s" width="100%%" height="400px" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>' % (self.video_link[self.video_link.rindex("/") + 1 :])
     elif self.video_link.count("you") > 0:
       if self.video_link.count("?v=") > 0:
         video = self.video_link[self.video_link.rindex("=") + 1:]
       else:
         video = self.video_link[self.video_link.rindex("/") + 1:]
-      html = '<iframe width="560" height="315" src="//www.youtube.com/embed/%s" frameborder="0" allowfullscreen></iframe>' % video
+      html = '<iframe width="100%%" height="400px" src="//www.youtube.com/embed/%s" frameborder="0" allowfullscreen></iframe>' % video
     return html
 
   def save(self, *args, **kwargs):
