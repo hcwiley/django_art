@@ -66,10 +66,9 @@ block content
                     img.img-thumbnail.enlarge(src='#{img.thumb()}', data-dimensions="#{media.dimensions}", data-medium="#{media.medium}", data-year="#{media.year}", data-name='#{media.name}', data-full='#{img.full_res()}')
                     br
                     br
-            {% if not forloop.last %}
+          if not forloop.last
             .row
               br
               hr.lightGray
               br
-          {% endif %}
       {% endfor %}

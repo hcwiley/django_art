@@ -35,15 +35,15 @@ html(lang="en")
     #content.container
       block breadcrumbs
       block content
-    footer.container-fluid
-      if artist and artist.cover_photo
-        .cover-photo(style="background-image: url('#{artist.cover_photo.full_res()}');")
-      .col-sm-12
-        .text-center.links
+  footer.container-fluid
+    if artist and artist.cover_photo
+      .cover-photo(style="background-image: url('#{artist.cover_photo.full_res()}');")
+    .col-sm-12
+      .text-center.links
+        li.brand
+          a(href='/') home
+        for category in categories
           li.brand
-            a(href='/') home
-          for category in categories
-            li.brand
-              a(href='/#{category.slug}') #{category.name}
-          li.brand
-            a(href='/contact') contact
+            a(href='/#{category.slug}') #{category.name}
+        li.brand
+          a(href='/contact') contact
