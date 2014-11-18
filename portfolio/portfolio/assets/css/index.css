@@ -88,6 +88,7 @@ body {
   background-size: auto 700px;
   background-position: 20% -210px;
   background-color: #000;
+  width: 100%;
 }
 .cover-photo * {
   color: #fff;

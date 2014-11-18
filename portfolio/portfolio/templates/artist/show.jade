@@ -13,7 +13,6 @@ block breadcrumbs
   .visible-xs
     br
 
-
 block content
   #enlarged.modal.fade(data-keyboard='true')
     .modal-content
@@ -55,23 +54,22 @@ block content
         .col-sm-12
           .row
             br
-          .col-sm-8.col-sm-offset-4
-            if media.video_link
-              .col-sm-3.pull-right
-                img.img-thumbnail.enlarge(src='#{media.thumb()}', data-dimensions="#{media.dimensions}", data-medium="#{media.medium}", data-year="#{media.year}", data-name='#{media.name}', data-full='#{media.full_res()}')
-                br
-                br
-            if media.aux_images.count > 0
-              for img in media.aux_images.all
+            .col-sm-8.col-sm-offset-4
+              if media.video_link
                 .col-sm-3.pull-right
-                  img.img-thumbnail.enlarge(src='#{img.thumb()}', data-dimensions="#{media.dimensions}", data-medium="#{media.medium}", data-year="#{media.year}", data-name='#{media.name}', data-full='#{img.full_res()}')
+                  img.img-thumbnail.enlarge(src='#{media.thumb()}', data-dimensions="#{media.dimensions}", data-medium="#{media.medium}", data-year="#{media.year}", data-name='#{media.name}', data-full='#{media.full_res()}')
                   br
                   br
-        {% if not forloop.last %}
-        .col-sm-12
-          .row
-            br
-            hr.lightGray
-            br
-        {% endif %}
+              if media.aux_images.count > 0
+                for img in media.aux_images.all
+                  .col-sm-3.pull-right
+                    img.img-thumbnail.enlarge(src='#{img.thumb()}', data-dimensions="#{media.dimensions}", data-medium="#{media.medium}", data-year="#{media.year}", data-name='#{media.name}', data-full='#{img.full_res()}')
+                    br
+                    br
+            {% if not forloop.last %}
+            .row
+              br
+              hr.lightGray
+              br
+          {% endif %}
       {% endfor %}
